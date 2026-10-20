@@ -1,0 +1,13 @@
+name: save-nginx
+on: workflow_dispatch
+jobs:
+  save:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          docker pull nginx:latest
+          docker save nginx:latest | gzip > nginx-latest.tar.gz
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nginx-image
+          path: nginx-latest.tar.gz
